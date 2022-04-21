@@ -1,20 +1,17 @@
 [
-    {
-        "id": 1,
-        "userName": "seededUser_01",
-        "password": "seedPass1"
-
-    },
-    {
-        "id": 2,
-        "userName": "seededUser_02",
-        "password": "seedPass1"
-
-    },
-    {
-        "id": 3,
-        "userName": "seededUser_03",
-        "password": "seedPass1"
-
-    }
+  {
+    "id": 1,
+    "username": "seededUser_01",
+    "password": "seedPass1"
+  },
+  {
+    "id": 2,
+    "username": "seededUser_02",
+    "password": "seedPass1"
+  },
+  {
+    "id": 3,
+    "username": "seededUser_03",
+    "password": "seedPass1"
+  }
 ]
