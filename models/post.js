@@ -21,15 +21,16 @@ Post.init(
     },
     datePosted: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       defaultValue: DataTypes.NOW,
     },
-    user_id: {
+    author_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: "user",
-        key: "id",
-      },
+      allowNull: false,
+      // references: {
+      //   model: "user",
+      //   key: "id",
+      // },
     },
   },
   {
