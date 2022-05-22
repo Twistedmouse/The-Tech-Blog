@@ -12,12 +12,12 @@ Comment.init(
       autoIncrement: true,
     },
     Comment: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     datePosted: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       defaultValue: DataTypes.NOW,
     },
     post_id: {
