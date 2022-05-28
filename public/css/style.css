@@ -26,18 +26,25 @@ ul{
   color: white;
 }
 
+ul li{
+  margin-right: 20px;
+}
+
 header{
   background: rgb(51, 58, 62);
   height: 90px;
   margin-bottom: 28px;
+  padding-top: full;
 }
 
 h1{
   width: 260px;
   background: white;
-  margin-top: 0px;
-  margin-left: 60px;
-  color: rgb(32, 8, 5);
+  padding-top:30px;
+  margin: 0px 0px 60px 0px;
+  margin-left: 28px;
+  padding-top:30px;
+  color: rgb(51, 58, 62);
   font-weight: bolder;
   box-shadow: 8px 5px 0px 2px grey;
   border-radius: 0.5rem;
@@ -52,7 +59,7 @@ h1{
   margin: 0px;
   height: 40px;
   color: white;
-  background-color: rgb(32, 8, 5);
+  background-color: rgb(51, 58, 62);
   justify-content: space-between;
   align-items: center;
 }
