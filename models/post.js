@@ -27,10 +27,6 @@ Post.init(
     author_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      // references: {
-      //   model: "user",
-      //   key: "id",
-      // },
     },
   },
   {
@@ -41,8 +37,5 @@ Post.init(
     modelName: "post",
   }
 );
-// Post.associate = function (models) {
-//   Post.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
-// };
 
 module.exports = Post;
