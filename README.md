@@ -1,16 +1,16 @@
-# Book Search Engine
+# The Tech Blog
 
 ![TechBlog-Screenshot](Assets/RootScreenshot.png)
 
-[Here is a link to the deployed app on Heroku](https://uwa-project-tech-blog.herokuapp.com/)
+[Link to the deployed app on Heroku](https://uwa-project-tech-blog.herokuapp.com/)
 
-[Here is a link to the gitHub repo](https://github.com/Twistedmouse/The-Tech-Blog)
+[Link to the gitHub repo](https://github.com/Twistedmouse/The-Tech-Blog)
 
 ![AUR license](https://img.shields.io/static/v1?label=License&message=MIT&color=blue)
 
 ## Description
 
-The Tech Blog is a project to understand models and the front end delivery is handled by HandlebarsJS
+The Tech Blog is a project to understand models/seeding data and the front end delivery is handled by HandlebarsJS
 
 ---
 
@@ -20,7 +20,6 @@ The Tech Blog is a project to understand models and the front end delivery is ha
 - [Models](#models)
 - [License](#license)
 - [Contributing](#contributing)
-- [Tests](#tests)
 - [Technologies](#technologies)
 - [Questions](#questions)
 
@@ -47,7 +46,175 @@ In order to run the app you will need to configure an environment varilable for 
 
 Below are some snapshots of the models used to seed the data used in this application:
 Index:
-![](/Assets/indexModel.png)
+
+```
+const User = require("./User");
+const Post = require("./Post");
+const Comment = require("./Comment");
+
+User.hasMany(Post, { foreignKey: "author_id" });
+User.hasMany(Comment, { foreignKey: "author_id" });
+
+Post.hasMany(Comment, { foreignKey: "post_id" });
+Post.belongsTo(User, { foreignKey: "author_id" });
+
+Comment.belongsTo(User, { foreignKey: "author_id" });
+Comment.belongsTo(Post, { foreignKey: "post_id" });
+
+module.exports = { User, Post, Comment };
+```
+
+Post model stores the posts for the blog that are seeded in:
+
+```
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/connection");
+
+class Post extends Model {}
+
+Post.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    datePosted: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: DataTypes.NOW,
+    },
+    author_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "post",
+  }
+);
+
+module.exports = Post;
+```
+
+User model seeds in the users stored from the database:
+
+```
+const { Model, DataTypes } = require("sequelize");
+const bcrypt = require("bcrypt");
+const sequelize = require("../config/connection");
+
+class User extends Model {
+  checkPassword(loginPass) {
+    return bcrypt.compareSync(loginPass, this.password);
+  }
+}
+
+User.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [6],
+      },
+    },
+  },
+  {
+    hooks: {
+      beforeCreate: async (newUserData) => {
+        newUserData.password = await bcrypt.hash(newUserData.password, 12);
+        return newUserData;
+      },
+    },
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "user",
+  }
+);
+
+module.exports = User;
+
+```
+
+Comment model seeds the comments stored from the database:
+
+```
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/connection");
+
+class Comment extends Model {}
+
+Comment.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    Comment: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    datePosted: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: DataTypes.NOW,
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      // references: {
+      //   Model: "post",
+      //   key: "id",
+      // },
+      // user_id: {
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: "user",
+      //     key: "id",
+      //   },
+      // },
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "comment",
+  }
+);
+
+module.exports = Comment;
+
+```
 
 ---
 
@@ -77,13 +244,12 @@ Back End Technologies
 - Node JS
 - Express JS
 - mySQL
-- Bcrypt
 
 ---
 
 ## Questions
 
-For any questions and support please contact Norman Bernard.
+For any questions and support please contact Tristan Fontanini.
 
-- Email: nksb414@gmail.com
-- Github: [Norman Bernard](https://github.com/Normksb)
+- Email: mousy93@hotmail.com
+- Github: [Tristan Fontanini](https://github.com/Twistedmouse)
